@@ -38,6 +38,7 @@ public class SignupServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("회원가입 요청");
+		response.setContentType("text/plain; charset=utf-8");
 		
 		SignupReqDto signupReqDto = SignupReqDto.builder()
 				.name(request.getParameter("name"))
@@ -47,7 +48,12 @@ public class SignupServlet extends HttpServlet {
 				.build();
 		
 		try {
-			userService.createUser(signupReqDto);
+			if(userService.createUser(signupReqDto)) {
+				System.out.println("회원가입 성공");
+				
+			}else {
+				System.out.println("회원가입 실패");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
